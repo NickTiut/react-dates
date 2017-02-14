@@ -18,11 +18,18 @@ export default class OutsideClickHandler extends React.Component {
   }
 
   componentDidMount() {
-    // `capture` flag is set to true so that a `stopPropagation` in the children
-    // will not prevent all outside click handlers from firing - maja
+    let placeholder = document.createElement('div');
+    let isSupportedTouch = 'ontouchend' in placeholder;
+    // cross-browser check
+    if (!isSupportedTouch) {
+      placeholder.setAttribute('ontouchend', 'return;');
+      isSupportedTouch = typeof placeholder.ontouchend === 'function';
+    }
+    const event = isSupportedTouch ? 'touchstart' : 'click';
+    placeholder = null;
     this.clickHandle = addEventListener(
       document,
-      'click',
+      event,
       this.onOutsideClick,
       { capture: true },
     );
