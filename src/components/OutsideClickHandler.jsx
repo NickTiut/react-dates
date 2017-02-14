@@ -25,7 +25,7 @@ export default class OutsideClickHandler extends React.Component {
       placeholder.setAttribute('ontouchend', 'return;');
       isSupportedTouch = typeof placeholder.ontouchend === 'function';
     }
-    const event = isSupportedTouch ? 'touchstart' : 'click';
+    const event = isSupportedTouch ? 'ontouchend' : 'click';
     placeholder = null;
     this.clickHandle = addEventListener(
       document,
